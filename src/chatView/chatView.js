@@ -43,8 +43,7 @@ export default ChatView;
 
 const StyledContainer = styled.div`
   display: flex;
-  flex-direction: column
-  justify-content: flex-end;
+  flex-direction: column;
 `;
 const StyledMessageDiv = styled.div`
   display: flex;

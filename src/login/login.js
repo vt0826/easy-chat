@@ -37,7 +37,7 @@ class Login extends React.Component {
           <TextXLarge> Incorrect email/password </TextXLarge>
         ) : null}
         <DisplayXSmall> Don't Have An Account? </DisplayXSmall>
-        <Link to="singup"> Sign Up!</Link>
+        <Link to="signup"> Sign Up!</Link>
       </div>
     );
   }

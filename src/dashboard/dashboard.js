@@ -36,20 +36,69 @@ class Dashboard extends React.Component {
             />
           )}
           {this.state.currentChat !== null && !this.state.newChat ? (
-            <ChatTextBox />
+            <ChatTextBox
+              messageRead={this.messageRead}
+              submitMessage={this.submitMessage}
+            />
           ) : null}
         </StyledDisplay>
       </StyledContainer>
     );
   }
 
-  currentChatSelected = chatIndex => {
-    this.setState({ currentChat: chatIndex });
+  currentChatSelected = async chatIndex => {
+    await this.setState({ currentChat: chatIndex });
+    this.messageRead();
   };
 
   newChatClicked = () => {
     this.setState({ newChat: true, currentChat: null });
   };
+
+  submitMessage = message => {
+    const docKey = this.buildDocKey(
+      this.state.chats[this.state.currentChat].users.filter(
+        user => user !== this.state.userEmail
+      )[0]
+    );
+
+    firebase
+      .firestore()
+      .collection('chats')
+      .doc(docKey)
+      .update({
+        messages: firebase.firestore.FieldValue.arrayUnion({
+          sender: this.state.userEmail,
+          message: message,
+          timestamp: Date.now(),
+        }),
+        receiverHasRead: false,
+      });
+  };
+
+  buildDocKey = friend => [this.state.userEmail, friend].sort().join(':');
+
+  messageRead = () => {
+    const docKey = this.buildDocKey(
+      this.state.chats[this.state.currentChat].users.filter(
+        user => user !== this.state.userEmail
+      )[0]
+    );
+    if (this.recieverClickedChat(this.state.currentChat)) {
+      firebase
+        .firestore()
+        .collection('chats')
+        .doc(docKey)
+        .update({ receiverHasRead: true });
+    } else {
+      console.log('click message where user is the sender');
+    }
+  };
+
+  recieverClickedChat = chatIndex =>
+    this.state.chats[chatIndex].messages[
+      this.state.chats[chatIndex].messages.length - 1
+    ].sender !== this.state.userEmail;
 
   componentDidMount = () => {
     firebase.auth().onAuthStateChanged(async _usr => {

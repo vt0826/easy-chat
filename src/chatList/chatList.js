@@ -67,6 +67,10 @@ class ChatList extends React.Component {
                         ].message.substring(0, 30)}
                       </StyledTextSmall>
                     </StyledChatSummary>
+                    {chat.receiverHasRead === false &&
+                    !this.userIsSender(chat) ? (
+                      <div>unread</div>
+                    ) : null}
                   </StyledChatLi>
 
                   <hr />
@@ -94,6 +98,10 @@ class ChatList extends React.Component {
   selectedChat = index => {
     this.props.currentChatSelected(index);
   };
+
+  userIsSender = chat =>
+    chat.messages[chat.messages.length - 1].sender === this.props.userEmail;
+
   signOut = () => firebase.auth().signOut();
 }
 
