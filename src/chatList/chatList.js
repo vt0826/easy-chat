@@ -70,7 +70,6 @@ class ChatList extends React.Component {
 export default ChatList;
 
 const StyledAvatar = styled.div`
-  background-color: ${props => (props.selected ? "#e2e2e2" : null)};
   width: 50px;
   height: 50px;
   text-align: center;

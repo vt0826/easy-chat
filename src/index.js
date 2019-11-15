@@ -25,6 +25,7 @@ const routes = (
   <Router>
     <div className="container" id="router">
       <main>
+        <Route exact path="/" component={Login} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/dashboard" component={Dashboard} />

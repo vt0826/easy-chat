@@ -16,7 +16,7 @@ Instantly reach the people in your life
 ## General info
 
 Simple, Reliable Messaging
-Easy Chat is a simple way to message and caht with your friends and family for free.
+Easy Chat is a simple way to message and chat with your friends and family for free.
 
 ## Technologies
 
